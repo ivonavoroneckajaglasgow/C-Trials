@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/2022175v/CLionProjects/MoE_1/Expert.cpp
+Expert.h
+C:/Users/2022175v/CLionProjects/MoE_1/Expert.h
+
+C:/Users/2022175v/CLionProjects/MoE_1/Expert.h
+iostream
+-
+Node.h
+C:/Users/2022175v/CLionProjects/MoE_1/Node.h
+Gate.h
+C:/Users/2022175v/CLionProjects/MoE_1/Gate.h
+
+C:/Users/2022175v/CLionProjects/MoE_1/Gate.h
+iostream
+-
+vector
+-
+Node.h
+C:/Users/2022175v/CLionProjects/MoE_1/Node.h
+
+C:/Users/2022175v/CLionProjects/MoE_1/Node.h
+iostream
+-
+vector
+-
+
+C:/Users/2022175v/CLionProjects/MoE_1/main.cpp
+iostream
+-
+vector
+-
+Expert.h
+C:/Users/2022175v/CLionProjects/MoE_1/Expert.h
+Gate.h
+C:/Users/2022175v/CLionProjects/MoE_1/Gate.h
+
