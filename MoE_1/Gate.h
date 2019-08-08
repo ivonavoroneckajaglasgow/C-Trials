@@ -25,6 +25,7 @@ using namespace arma;
 //6) gamma - current value of the gating parameter.
 //7) prior_gamma_mean - prior mean for the gating parameter.
 //8) prior_gamma_var - prior var cov matrix for the gating parameter.
+//9) allocations - vector that denotes to which expert under the gate each observation is assigned to.
 //Constructor initialised with:
 //1) Name -string name given to a Gate. For the ease of tracking what's going on.
 //2) Data - x and y.
@@ -52,9 +53,9 @@ public:
     vec gamma;
     vec prior_gamma_mean;
     mat prior_gamma_var;
+    vec allocations;
 
-
-    Gate(string aName, vec x, vec y, vec p, vec gamma, vec prior_gamma_mean, mat prior_gamma_var);
+    Gate(string aName, vec x, vec y, vec p, vec gamma, vec prior_gamma_mean, mat prior_gamma_var,vec allocations);
 
     void addChild(const Node& aChild);
 

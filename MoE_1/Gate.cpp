@@ -5,7 +5,7 @@
 #include "Gate.h"
 
 
-Gate::Gate(string aName, vec aX, vec aY, vec aP, vec aGamma, vec aPrior_gamma_mean, mat aPrior_gamma_var){
+Gate::Gate(string aName, vec aX, vec aY, vec aP, vec aGamma, vec aPrior_gamma_mean, mat aPrior_gamma_var, vec aAllocations){
 name=aName;
 x=aX;
 y=aY;
@@ -13,6 +13,7 @@ p=aP;
 gamma=aGamma;
 prior_gamma_mean=aPrior_gamma_mean;
 prior_gamma_var=aPrior_gamma_var;
+allocations = aAllocations;
 cout<<"Thanks for creating me. I am a gate called "<<name<<"."<<endl;
 }
 

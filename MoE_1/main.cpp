@@ -16,7 +16,7 @@ void linkChildToParent(Gate& aParent, Node& aChild)
 
 
 int main() {
- Gate G("G",{1.0,2.0,3.0}, {4.0,5.0,6.0}, {0.2,0.5,0.2}, {0.0,0.0}, {3.0,10.0},{{10.0,0.0},{0.0,10.0}} );
+ Gate G("G",{1.0,2.0,3.0}, {4.0,5.0,6.0}, {0.2,0.5,0.2}, {0.0,0.0}, {3.0,10.0},{{10.0,0.0},{0.0,10.0}}, {1,1,2} );
  Expert E1("E1", {1.0,2.0,3.0}, {4.0,5.0,6.0}, {0.0,0.0}, 1.0,{0.0,0.0},{{1.0,0.0},{0.0,2.0}},0.001,0.001);
 
  linkChildToParent(G,E1);
@@ -28,6 +28,8 @@ int main() {
  E1.Summary();
  G.Summary();
 
+ cout << "Allocations are:" << G.allocations<< endl;
+ //cout << "Allocations are:" << E1.Parent[0].allocations << endl; DOES NOT WORK
 
  return 0;
 }
