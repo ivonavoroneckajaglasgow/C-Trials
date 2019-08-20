@@ -16,8 +16,13 @@ class Node {
 public:
     Gate* Parent;
     string name;
+    string type;
+    Node();
     void showParent();
     void showAncestors();
+    virtual void showDescendants();
+    virtual void showTerminalNodes();
+    virtual void getAddresses();
 };
 
 

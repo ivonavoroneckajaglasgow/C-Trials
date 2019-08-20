@@ -18,7 +18,7 @@ class NormalExpert: public Expert {
 public:
     NormalParameters parameters;
 
-    NormalExpert(string aName, NormalParameters aParameters);
+    NormalExpert(string aName1, string aName, NormalParameters aParameters);
 };
 
 

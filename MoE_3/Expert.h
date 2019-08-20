@@ -14,8 +14,6 @@ using namespace std;
 class Expert: public Node{
 public:
     Expert(string aName);
-
-    Expert();
 };
 
 

@@ -8,59 +8,122 @@
 
 using namespace std;
 
-
-int main() {
-    NormalParameters GeneralNormalParams{
+NormalParameters GeneralNormalParams{
         {0.0,0.0},
         1.0,
         {0.0,0.0},
         {{1.0,0.0},{0.0,2.0}},
         0.001,
         0.001
-    };
+};
 
-    GateParameters GeneralGateParams{
-            {0.0,0.0},
-            {3.0,10.0},
-            {{10.0,0.0},{0.0,10.0}}
-    };
+GateParameters GeneralGateParams{
+        {0.0,0.0},
+        {3.0,10.0},
+        {{10.0,0.0},{0.0,10.0}}
+};
 
-    NormalExpert* E1= new NormalExpert("E1", GeneralNormalParams);
-    Gate* G1= new Gate("G1", GeneralGateParams);
-    G1 -> addChild(E1);
-    G1 -> showChildren();
+vector<Gate> createGateObjects(int N){
+    vector<Gate> result;
+    for(int i=0;i<N;i++){
+        result.push_back(Gate("G" + std::to_string(i),GeneralGateParams));
+    }
+    return result;
+}
 
-    //cout<<"Test that I can access parent's info via child: "<<endl;
-    //cout<<E1->Parent->parameters.prior_gamma_var<<endl;
-    //cout<<"WORKS"<<endl;
+vector<Expert> createExpertObjects(int N){
+    vector<Expert> result;
+    for(int i=0;i<N;i++){
+        result.push_back(Expert("E" + std::to_string(i)));
+    }
+    return result;
+}
 
-    //cout<<"Test over-writing parameters:"<<endl;
-    //cout<<"Before:"<<endl;
-    //cout<<E1->Parent->parameters.gamma<<endl;
-    //E1->Parent->parameters.gamma={1.0,1.0};
-    //cout<<"After:"<<endl;
-    //cout<<E1->Parent->parameters.gamma<<endl;
-    //cout<<"WORKS"<<endl;
+vector<Gate> createTree(vector<Gate> gates,vector<Expert> experts) {
+    int N_gates = gates.size();
 
-    cout<<"Test adding more children:"<<endl;
-    Gate* G2= new Gate("G2", GeneralGateParams);
-    G1 -> addChild(G2);
-    Expert* E2= new Expert("E2");
-    G1 -> addChild(E2);
-    G1->showChildren();
+    for (int i = 0; i < N_gates; i++) {
+        if (i == N_gates - 1) {
+            gates[i].addChild(&experts[i+1]);
+            gates[i].addChild(&experts[i]);
+        } else {
+            gates[i].addChild(&gates[i + 1]);
+            gates[i].addChild(&experts[i]);
+        }
+    }
 
-    cout<<"Test making the tree hierarchical:"<<endl;
-    NormalExpert* E3= new NormalExpert("E3", GeneralNormalParams);
-    G2->showChildren();
-    G2->addChild(E3);
-    G2->showChildren();
+    return gates;
+    //return experts;
 
-    cout<<"Test accessing grandparent's info:"<<endl; //LOOK INTO RECURSION
-    cout<<E3->name<<" grandparent is ";
-    cout<<E3->Parent->Parent->name<<"."<<endl;
+}
 
-    E3->showParent();
-    E3->showAncestors(); //How do I do this with recursion?
 
-    return 0;
+int main(){
+    vector<Gate> gates_vector;
+    vector<Expert> expert_vector;
+    int N_gates=4;
+    int N_experts= N_gates+1;
+    gates_vector=createGateObjects(N_gates);
+    expert_vector=createExpertObjects(N_experts);
+    gates_vector=createTree(gates_vector, expert_vector);
+    gates_vector[0].showChildren();
+    gates_vector[0].showDescendants();
+    expert_vector[0].showParent();
+
+}
+
+
+int main_old() {
+
+    Gate* G= new Gate("G", GeneralGateParams);
+    Gate* LG= new Gate("LG", GeneralGateParams);
+    Gate* RG= new Gate("RG", GeneralGateParams);
+    Gate* MG= new Gate("MG", GeneralGateParams);
+
+    NormalExpert* E1= new NormalExpert(std::string(), "E1", GeneralNormalParams);
+    NormalExpert* E2= new NormalExpert(std::string(), "E2", GeneralNormalParams);
+    NormalExpert* E3= new NormalExpert(std::string(), "E3", GeneralNormalParams);
+    NormalExpert* E4= new NormalExpert(std::string(), "E4", GeneralNormalParams);
+    NormalExpert* E5= new NormalExpert(std::string(), "E5", GeneralNormalParams);
+
+   G->addChild(LG);
+   G->addChild(RG);
+   LG->addChild(E1);
+   LG->addChild(MG);
+   RG->addChild(E2);
+   RG->addChild(E3);
+   MG->addChild(E4);
+   MG->addChild(E5);
+
+   G->showParent();
+   G->showChildren();
+   G->showAncestors();
+   cout<<"G descendants are: "<<endl;
+   G->showDescendants();
+   cout<<"G terminal nodes are: "<<endl;
+   G->showTerminalNodes();
+
+   MG->showParent();
+   MG->showChildren();
+   cout<<"MG ancestors:"<<endl;
+   MG->showAncestors();
+   cout<<"MG descendants are: "<<endl;
+   MG->showDescendants();
+   cout<<"MG terminal nodes are: "<<endl;
+   MG->showTerminalNodes();
+
+   LG->showParent();
+   LG->showChildren();
+   cout<<"LG ancestors:"<<endl;
+   LG->showAncestors();
+   cout<<"LG descendants are: "<<endl;
+   LG->showDescendants();
+   cout<<"LG terminal nodes are: "<<endl;
+   LG->showTerminalNodes();
+
+   MG->getAddresses();
+   cout<<E4<<endl;
+   cout<<E5<<endl;
+
+   return 0;
 }

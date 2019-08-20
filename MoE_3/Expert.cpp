@@ -8,9 +8,12 @@
 
 using namespace std;
 
-Expert::Expert(string aName) {
+Expert::Expert(string aName)
+:Node()
+{
+    this->type="E";
     this->name=aName;
     cout<<"Expert "<<name<<" has been created."<<endl;
 }
 
-Expert::Expert() {}
+

@@ -5,10 +5,15 @@
 #include "Gate.h"
 #include <iostream>
 #include <vector>
+#include "armadillo"
 
+using namespace arma;
 using namespace std;
 
-Gate::Gate(string aName,GateParameters aParameters){
+Gate::Gate(string aName,GateParameters aParameters)
+:Node()
+{
+    this->type="G";
     this->name=aName;
     this->parameters=aParameters;
     cout<<"Gate "<<name<<" has been created."<<endl;
@@ -41,4 +46,31 @@ void Gate::showChildren(){
     }
 };
 
+void Gate::showDescendants(){
+    if(Children.size()==0){
+        cout<<"I have no descendants."<<endl;
+    }else{
+        for(int i=0;i<Children.size();i++){
+            cout<<Children[i]->name<<endl;
+            if(Children[i]->type=="G"){
+                Children[i]->showDescendants();
+            }
+        }
+    }
+
+};
+
+void Gate::showTerminalNodes() {
+    if (Children.size() == 0) {
+        cout << "I have no descendants." << endl;
+    } else {
+        for (int i = 0; i < Children.size(); i++) {
+            if (Children[i]->type == "E") {
+                cout << Children[i]->name << endl;
+            } else {
+                Children[i]->showTerminalNodes();
+            }
+        }
+    }
+};
 

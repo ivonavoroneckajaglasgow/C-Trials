@@ -5,7 +5,7 @@
 #include "NormalExpert.h"
 using namespace std;
 
-NormalExpert::NormalExpert(string aName, NormalParameters aParameters){
+NormalExpert::NormalExpert(string aName1, string aName, NormalParameters aParameters) : Expert(aName1) {
     this->name=aName;
     this->parameters=aParameters;
     cout<<"Normal Expert "<<name<<" has been created."<<endl;

@@ -7,13 +7,39 @@
 
 using namespace std;
 
+Node::Node(){
+    this->Parent=NULL;
+}
+
+
 void Node::showParent() {
- cout <<name<< " parent is "<<Parent->name<<"."<<endl;
+    if (Parent == NULL) {
+        if(type=="G") {
+            cout << name << " is a root Gate." << endl;
+        }
+    } else {
+        cout << name << " parent is " << Parent->name << "." << endl;
+    }
 }
 
 void Node::showAncestors() {
-   if(Parent!=NULL){
+    if(Parent==NULL){
+        cout <<" " << endl;
+    }else{
        cout<<Parent->name<<endl;
+       Parent->showAncestors();
    }
-   //Parent->showAncestors();
+
+   }
+
+
+void Node::showDescendants(){
+
+}
+
+void Node::showTerminalNodes(){
+}
+
+void Node::getAddresses(){
+
 }
