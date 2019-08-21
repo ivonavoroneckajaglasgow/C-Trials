@@ -37,7 +37,6 @@ using namespace arma;
 class Expert: public Node {
 public:
     friend Gate;
-    vector<Gate> Parent;
     vec x;
     vec y;
     vec beta;

@@ -45,7 +45,7 @@ class Expert;
 class Gate: public Node{
 public:
     friend Expert;
-    vector<Gate> Parent;
+    Gate* Parent;
     vector<Node> Children;
     vec x;
     vec y;

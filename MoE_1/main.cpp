@@ -3,14 +3,14 @@
 #include "Node.h"
 #include "Expert.h"
 #include "Gate.h"
-#include "armadillo"
+#include <armadillo>
 
 using namespace std;
 using namespace arma;
 
 void linkChildToParent(Gate& aParent, Node& aChild)
 {
-    aParent.addChild(aChild);
+//    aParent.addChild(aChild);
     aChild.addParent(aParent);
 }
 
@@ -29,7 +29,7 @@ int main() {
  G.Summary();
 
  cout << "Allocations are:" << G.allocations<< endl;
- //cout << "Allocations are:" << E1.Parent[0].allocations << endl; DOES NOT WORK
+  cout << "Allocations are:" << E1.Parent[0].allocations << endl; // DOES NOT WORK
 
  return 0;
 }

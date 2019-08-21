@@ -1,12 +1,10 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/MoE_1.dir/main.cpp.obj"
-  "CMakeFiles/MoE_1.dir/Expert.cpp.obj"
-  "CMakeFiles/MoE_1.dir/Gate.cpp.obj"
-  "CMakeFiles/MoE_1.dir/Node.cpp.obj"
+  "CMakeFiles/MoE_1.dir/main.cpp.o"
+  "CMakeFiles/MoE_1.dir/Expert.cpp.o"
+  "CMakeFiles/MoE_1.dir/Gate.cpp.o"
+  "CMakeFiles/MoE_1.dir/Node.cpp.o"
   "MoE_1.pdb"
-  "MoE_1.exe"
-  "MoE_1.exe.manifest"
-  "libMoE_1.dll.a"
+  "MoE_1"
 )
 
 # Per-language clean rules from dependency scanning.

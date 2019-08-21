@@ -19,6 +19,11 @@ Gate::Gate(string aName,GateParameters aParameters)
     cout<<"Gate "<<name<<" has been created."<<endl;
 }
 
+Gate::~Gate(){
+    for (int i; i<this->Children.size(); i++)
+        delete this->Children[i];
+}
+
 void Gate::addChild(Node* aChild){
     this -> Children.push_back(aChild);
     aChild -> Parent = this;
@@ -36,12 +41,13 @@ void Gate::showChildren(){
     }
 
     for(int i=0; i<Children.size();i++) {
+        cout << Children[i]->name;
         if (i == Children.size() - 2) {
-            cout << Children[i]->name << " and ";
+            cout << " and ";
         } else if (i == Children.size()-1) {
-            cout << Children[i]->name<<"."<<endl;
+            cout << "."<<endl;
         } else {
-            cout << Children[i]->name << ", ";
+            cout << ", ";
         }
     }
 };

@@ -18,6 +18,7 @@ public:
     vector<Node*> Children;
     GateParameters parameters;
     Gate(string aName, GateParameters aParameters);
+    ~Gate();
     void addChild(Node* aChild);
     void showChildren();
     void showDescendants();

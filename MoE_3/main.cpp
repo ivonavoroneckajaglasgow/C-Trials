@@ -8,7 +8,7 @@
 
 using namespace std;
 
-NormalParameters GeneralNormalParams{
+NormalParameters generalNormalParams{
         {0.0,0.0},
         1.0,
         {0.0,0.0},
@@ -17,7 +17,7 @@ NormalParameters GeneralNormalParams{
         0.001
 };
 
-GateParameters GeneralGateParams{
+GateParameters generalGateParams{
         {0.0,0.0},
         {3.0,10.0},
         {{10.0,0.0},{0.0,10.0}}
@@ -26,7 +26,7 @@ GateParameters GeneralGateParams{
 vector<Gate> createGateObjects(int N){
     vector<Gate> result;
     for(int i=0;i<N;i++){
-        result.push_back(Gate("G" + std::to_string(i),GeneralGateParams));
+        result.push_back(Gate("G" + std::to_string(i), generalGateParams));
     }
     return result;
 }
@@ -57,8 +57,27 @@ vector<Gate> createTree(vector<Gate> gates,vector<Expert> experts) {
 
 }
 
+Node* create_tree(int depth, int nchildren, int* gcount, int* ecount) {
+   if (depth==0)
+       return new NormalExpert("E" + std::to_string((*ecount)++), generalNormalParams);
+   Gate* root = new Gate("G" + std::to_string((*gcount)++), generalGateParams);
+   for (int i=0; i<nchildren; i++)
+       root->addChild(create_tree(depth-1, nchildren, gcount, ecount));
+   return root;
+}
 
-int main(){
+int main() {
+    int gcount=0;
+    int ecount=0;
+    Gate* root = dynamic_cast<Gate *>(create_tree(20, 2, &gcount, &ecount));
+//    Gate* root = (Gate*)create_tree(0, 2, &gcount, &ecount);
+    if (root==NULL) cout << "root is NULL." << endl;
+    delete root;
+    return 0;
+
+}
+
+int main_not_that_old(){
     vector<Gate> gates_vector;
     vector<Expert> expert_vector;
     int N_gates=4;
@@ -69,22 +88,24 @@ int main(){
     gates_vector[0].showChildren();
     gates_vector[0].showDescendants();
     expert_vector[0].showParent();
+    cout << typeid(gates_vector[0]).name() << endl;
 
+    return 0;
 }
 
 
 int main_old() {
 
-    Gate* G= new Gate("G", GeneralGateParams);
-    Gate* LG= new Gate("LG", GeneralGateParams);
-    Gate* RG= new Gate("RG", GeneralGateParams);
-    Gate* MG= new Gate("MG", GeneralGateParams);
+    Gate* G= new Gate("G", generalGateParams);
+    Gate* LG= new Gate("LG", generalGateParams);
+    Gate* RG= new Gate("RG", generalGateParams);
+    Gate* MG= new Gate("MG", generalGateParams);
 
-    NormalExpert* E1= new NormalExpert(std::string(), "E1", GeneralNormalParams);
-    NormalExpert* E2= new NormalExpert(std::string(), "E2", GeneralNormalParams);
-    NormalExpert* E3= new NormalExpert(std::string(), "E3", GeneralNormalParams);
-    NormalExpert* E4= new NormalExpert(std::string(), "E4", GeneralNormalParams);
-    NormalExpert* E5= new NormalExpert(std::string(), "E5", GeneralNormalParams);
+    NormalExpert* E1= new NormalExpert("E1", generalNormalParams);
+    NormalExpert* E2= new NormalExpert("E2", generalNormalParams);
+    NormalExpert* E3= new NormalExpert("E3", generalNormalParams);
+    NormalExpert* E4= new NormalExpert("E4", generalNormalParams);
+    NormalExpert* E5= new NormalExpert("E5", generalNormalParams);
 
    G->addChild(LG);
    G->addChild(RG);

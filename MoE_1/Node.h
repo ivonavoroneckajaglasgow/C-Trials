@@ -21,7 +21,9 @@ using namespace std;
 class Node {
 public:
     string name;
-    vector<Node> Parent;
+    Node& parent;
+
+    Node(Node &parent);
 
     void addParent(Node& aParent);
     void showParent();
