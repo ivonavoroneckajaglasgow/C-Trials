@@ -3,6 +3,7 @@
 //
 
 #include "Gate.h"
+#include "Node.h"
 #include <iostream>
 #include <vector>
 #include "armadillo"
@@ -11,7 +12,7 @@ using namespace arma;
 using namespace std;
 
 Gate::Gate(string aName,GateParameters aParameters)
-:Node()
+        :Node()
 {
     this->type="G";
     this->name=aName;
@@ -28,10 +29,10 @@ void Gate::addChild(Node* aChild){
     this -> Children.push_back(aChild);
     aChild -> Parent = this;
     cout<<"Child "<<aChild->name<<" has been added to the parent "<<this->name
-    <<" and vice versa."<<endl;
+        <<" and vice versa."<<endl;
 }
 
-void Gate::showChildren(){
+void Gate::printChildren(){
     if(Children.size()>1) {
         cout << "Gate " << name << " has " << Children.size() << " children called ";
     }else if(Children.size()==1){
@@ -52,21 +53,21 @@ void Gate::showChildren(){
     }
 };
 
-void Gate::showDescendants(){
+void Gate::printDescendants(){
     if(Children.size()==0){
         cout<<"I have no descendants."<<endl;
     }else{
         for(int i=0;i<Children.size();i++){
             cout<<Children[i]->name<<endl;
             if(Children[i]->type=="G"){
-                Children[i]->showDescendants();
+                Children[i]->printDescendants();
             }
         }
     }
 
 };
 
-void Gate::showTerminalNodes() {
+void Gate::printTerminalNodes() {
     if (Children.size() == 0) {
         cout << "I have no descendants." << endl;
     } else {
@@ -74,7 +75,7 @@ void Gate::showTerminalNodes() {
             if (Children[i]->type == "E") {
                 cout << Children[i]->name << endl;
             } else {
-                Children[i]->showTerminalNodes();
+                Children[i]->printTerminalNodes();
             }
         }
     }

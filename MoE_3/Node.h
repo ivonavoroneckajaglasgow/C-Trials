@@ -11,18 +11,23 @@
 using namespace std;
 
 class Gate;
+class Expert;
 
 class Node {
 public:
     Gate* Parent;
+    vector<Node*>  Children;
     string name;
     string type;
+    vector<Node*> descendants;
     Node();
-    void showParent();
-    void showAncestors();
-    virtual void showDescendants();
-    virtual void showTerminalNodes();
+    void printParent();
+    void printAncestors();
+    virtual void printDescendants();
+    virtual void printTerminalNodes();
     virtual void getAddresses();
+    virtual vector<Node*> showChildren();
+    vector<Node*> showDescendants();
 };
 
 

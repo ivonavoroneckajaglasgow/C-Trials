@@ -13,6 +13,7 @@ Expert::Expert(string aName)
 {
     this->type="E";
     this->name=aName;
+    this->Children.push_back(this);
     cout<<"Expert "<<name<<" has been created."<<endl;
 }
 
