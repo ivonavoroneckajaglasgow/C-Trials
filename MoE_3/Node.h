@@ -19,7 +19,6 @@ public:
     vector<Node*>  Children;
     string name;
     string type;
-    vector<Node*> descendants;
     Node();
     void printParent();
     void printAncestors();
@@ -28,6 +27,8 @@ public:
     virtual void getAddresses();
     virtual vector<Node*> showChildren();
     vector<Node*> showDescendants();
+    vector<Node*> showDescendants2();
+    int countDescendants();
 };
 
 

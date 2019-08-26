@@ -45,7 +45,7 @@ int main_old() {
 }
 
 
-int main() {
+int main_also_old() {
 
     Gate* G= new Gate("G", generalGateParams);
     Gate* LG= new Gate("LG", generalGateParams);
@@ -103,17 +103,40 @@ int main() {
     desc_test=LG->showDescendants();
     cout<<desc_test.size()<<endl;
 
+    cout<<"LG my desc are:"<<endl;
+
     for(int i=0;i<desc_test.size();i++) {
         cout << desc_test[i]->name << endl;
     }
 
-    cout<<"my desc are:"<<endl;
+    return 0;
+}
 
-    for(int i=0;i<LG->descendants.size();i++) {
-        cout << LG->descendants[i]->name << endl;
+int main(){
+    int gcount=0;
+    int ecount=0;
+    Gate* root = dynamic_cast<Gate *>(create_tree(3, 2, &gcount, &ecount));
+
+    cout<<"Number of descendants:"<<endl;
+    cout<<root->countDescendants()<<endl;
+
+
+    vector <Node*> desc_test;
+    desc_test=root->showDescendants();
+
+    cout<<"Show descendants:"<<endl;
+    for(int i=0;i<desc_test.size();i++){
+        cout<<desc_test[i]->name<<endl;
     }
 
+    vector <Node*> desc_test2;
+    desc_test2=root->showDescendants2();
 
+    cout<<"Show descendants 2:"<<endl;
+    for(int i=0;i<desc_test2.size();i++){
+        cout<<desc_test2[i]->name<<endl;
+    }
 
+    delete root;
     return 0;
 }

@@ -51,18 +51,40 @@ vector<Node*> Node::showChildren() {
 
 vector<Node*> Node::showDescendants() {
 
+    vector<Node*> mydescendants;
     for(int i=0; i<this->Children.size();i++){
-        descendants.push_back(this->Children[i]);
-        cout<<"I have added "<<this->Children[i]->name<<" to descendants."<<endl;
-        cout<<"Current descendant's name is "<<descendants[descendants.size()-1]->name<<endl;
-        cout<<"As of now my descendants vector is of size: "<<descendants.size()<<endl;
+        mydescendants.push_back(this->Children[i]);
+        cout<<"I have now added "<<Children[i]->name<<" as a descendant."<<endl;
         if(this->Children[i]->type=="G"){
-        this->Children[i]->showDescendants();
+        Children[i]->showDescendants();
         }
     }
-
-    cout<<"I have created a vector of descendants of size: "<<descendants.size()<<endl;
-
-    return descendants;
+    return  mydescendants;
 }
 
+
+vector<Node*> Node::showDescendants2() {
+
+    vector<Node*> my_desc;
+
+    for(int i=0; i<Children.size();i++){
+        cout<<"This is now "<<name<<endl;
+        my_desc.push_back(Children[i]);
+        cout<<"I have now added "<<Children[i]->name<<" as a descendant."<<endl;
+        if(Children[i]->type=="G"){
+            Children[i]->showDescendants();
+        }
+    }
+    return  my_desc;
+}
+
+int Node::countDescendants(){
+    int numDescendants = 0;
+            for(int i=0;i<Children.size();i++){
+                numDescendants++;
+            if(Children[i]->type=="G"){
+                numDescendants+=Children[i]->countDescendants();
+            }
+        }
+    return numDescendants;
+};
