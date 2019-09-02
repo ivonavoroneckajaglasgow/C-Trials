@@ -32,6 +32,40 @@ Node* create_tree(int depth, int nchildren, int* gcount, int* ecount) {
     return root;
 }
 
+ int populateGate(Gate* parent, vector<int> description, int start, int* gcount, int* ecount, int d) {
+    // make this stable
+    // raise an exception if start>=description.size()
+    cout << "POPULATE GATE CALLED AT POSITION " << start << "(" << description[start] << ")" << endl;
+    int pos =  start;
+    for (int i=0; i<description[start]; i++) {
+        pos++;
+        cout << i << " / " << pos << endl;
+        if (pos >= description.size() || description[pos] == 0) {
+            //^^^^^^^^^^^^^^^^^^^^^^^^ maybe we should issue a warning (will create experts if we reach end of description vector
+            parent->addChild(new NormalExpert("E" + std::to_string((*ecount)++), generalNormalParams));
+        } else {
+            Gate *g = new Gate("G" + std::to_string((*gcount)++), generalGateParams);
+            parent->addChild(g);
+            if (d<10) pos = populateGate(g, description, pos, gcount, ecount, d+1);
+        }
+    }
+    return pos;
+    // 2 2 0 0 2 0 0
+}
+
+Node* translate_tree_meeting(vector<int> description) {
+    int ecount=0;
+    int gcount=0;
+    if (description.size()==0)
+        return 0;
+   if (description[0]==0)
+        return new NormalExpert("E" + std::to_string(ecount++), generalNormalParams);
+   Gate* root = new Gate("G" + std::to_string(gcount++), generalGateParams);
+   populateGate(root, description, 0, &gcount, &ecount, 0);
+   return root;
+}
+
+
 Node* translate_tree(vector<int> description, int location, int* gcount, int* ecount){
 
     Gate* root = new Gate("G" + std::to_string((*gcount)++), generalGateParams);
@@ -145,7 +179,7 @@ int main(){
    int ecount=0;
    int location=0;
 
-   test_translate=translate_tree(test,location,&gcount,&ecount);
+   test_translate=translate_tree_meeting(test);
 
    return 0;
 }

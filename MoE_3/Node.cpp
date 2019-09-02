@@ -137,7 +137,17 @@ vector<int> Node::describeTree(){
     return description_test;
 }
 
-vector<int> Node::describeTreeInternal(vector<int>* description){
+vector<int> Node::describeTreeInternal(vector<int>* description){ /// no need for return
+   // make this a virtual function
+   // implementation for node pushes back 0.
+   // implementation for gate does something see below.
+/*  description->push_back(Children.size());
+    for(int i=0;i<Children.size();i++){
+              Children[i]->describeTreeInternal(description);
+    }
+*/
+
+
     if(description->size()==0) {
         description->push_back(Children.size());
     }
