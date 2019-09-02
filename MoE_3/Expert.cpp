@@ -17,4 +17,11 @@ Expert::Expert(string aName)
     cout<<"Expert "<<name<<" has been created."<<endl;
 }
 
+int Expert::countChildren() {
+     int n=0;
+     return n;
+}
 
+void Expert::printChildren() {
+    cout<<"I am an expert "<<name<<", I can not have children."<<endl;
+}

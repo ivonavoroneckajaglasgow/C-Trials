@@ -32,111 +32,155 @@ Node* create_tree(int depth, int nchildren, int* gcount, int* ecount) {
     return root;
 }
 
-int main_old() {
-    int gcount=0;
-    int ecount=0;
-    Gate* root = dynamic_cast<Gate *>(create_tree(5, 2, &gcount, &ecount));
-//    Gate* root = (Gate*)create_tree(0, 2, &gcount, &ecount);
-    if (root==NULL) cout << "root is NULL." << endl;
-    root->printTerminalNodes();
-    delete root;
-    return 0;
+Node* translate_tree(vector<int> description, int location, int* gcount, int* ecount){
+
+    Gate* root = new Gate("G" + std::to_string((*gcount)++), generalGateParams);
+
+        if(description[location]==0) {
+            root->addChild(new NormalExpert("E" + to_string((*ecount)++), generalNormalParams));
+        }else{
+            for(int i=0;i<description[location];i++){
+            root->addChild(translate_tree(description,description[location+i],gcount,ecount));
+        }
+    }
 
 }
 
 
-int main_also_old() {
+Node* translate_tree2(vector<int> description, int location, int* gcount, int* ecount){
+
+    Gate* root = new Gate("G" + std::to_string((*gcount)++), generalGateParams);
+    //cout<<"Current location "<<location<<endl;
+    //cout<<"Current number of children is "<<description[location]<<endl;
+
+    for(int i=0; i<description[location]; i++){
+        if(description[location+i]==0){
+            //cout<<"Looking at location "<<location+i<<endl;
+            //cout<<"I know you are an expert"<<endl;
+            root->addChild(new NormalExpert("E" + to_string((*ecount)++), generalNormalParams));
+        }else{
+            //cout<<"Looking at location "<<location+i<<endl;
+            //cout<<"I know you are a gate"<<endl;
+            //cout<<"New location is "<<description[location]+1<<endl;
+            root->addChild(translate_tree2(description,description[location],gcount,ecount));
+        }
+    }
+
+
+
+    return root;
+}
+
+
+
+int main_forme(){
+    int gcount=0;
+    int ecount=0;
+    Gate* root = dynamic_cast<Gate *>(create_tree(3, 2, &gcount, &ecount));
+}
+
+
+int main(){
 
     Gate* G= new Gate("G", generalGateParams);
-    Gate* LG= new Gate("LG", generalGateParams);
-    Gate* RG= new Gate("RG", generalGateParams);
-    Gate* MG= new Gate("MG", generalGateParams);
+    Gate* AG= new Gate("AG", generalGateParams);
+    Gate* BG= new Gate("BG", generalGateParams);
+    Gate* CG= new Gate("CG", generalGateParams);
+    Gate* DG= new Gate("DG", generalGateParams);
+    Gate* EG= new Gate("EG", generalGateParams);
+    Gate* FG= new Gate("FG", generalGateParams);
+    Gate* GG= new Gate("GG", generalGateParams);
 
     NormalExpert* E1= new NormalExpert("E1", generalNormalParams);
     NormalExpert* E2= new NormalExpert("E2", generalNormalParams);
     NormalExpert* E3= new NormalExpert("E3", generalNormalParams);
     NormalExpert* E4= new NormalExpert("E4", generalNormalParams);
     NormalExpert* E5= new NormalExpert("E5", generalNormalParams);
+    NormalExpert* E6= new NormalExpert("E6", generalNormalParams);
+    NormalExpert* E7= new NormalExpert("E7", generalNormalParams);
+    NormalExpert* E8= new NormalExpert("E8", generalNormalParams);
+    NormalExpert* E9= new NormalExpert("E9", generalNormalParams);
+    NormalExpert* E10= new NormalExpert("E10", generalNormalParams);
+    NormalExpert* E11= new NormalExpert("E11", generalNormalParams);
+    NormalExpert* E12= new NormalExpert("E12", generalNormalParams);
+    NormalExpert* E13= new NormalExpert("E12", generalNormalParams);
 
-    G->addChild(LG);
-    G->addChild(RG);
-    LG->addChild(E1);
-    LG->addChild(MG);
-    RG->addChild(E2);
-    RG->addChild(E3);
-    MG->addChild(E4);
-    MG->addChild(E5);
+   G->addChild(AG);
+   G->addChild(E1);
+   G->addChild(BG);
+   G->addChild(CG);
 
-    G->printParent();
-    G->printChildren();
-    G->printAncestors();
-    cout<<"G descendants are: "<<endl;
-    G->printDescendants();
-    cout<<"G terminal nodes are: "<<endl;
-    G->printTerminalNodes();
+   AG->addChild(E2);
+   AG->addChild(E3);
+   AG->addChild(E4);
 
-    MG->printParent();
-    MG->printChildren();
-    cout<<"MG ancestors:"<<endl;
-    MG->printAncestors();
-    cout<<"MG descendants are: "<<endl;
-    MG->printDescendants();
-    cout<<"MG terminal nodes are: "<<endl;
-    MG->printTerminalNodes();
+   BG->addChild(DG);
+   BG->addChild(EG);
 
-    LG->printParent();
-    LG->printChildren();
-    cout<<"LG ancestors:"<<endl;
-    LG->printAncestors();
-    cout<<"LG descendants are: "<<endl;
-    LG->printDescendants();
-    cout<<"LG terminal nodes are: "<<endl;
-    LG->printTerminalNodes();
+   DG->addChild(E5);
+   DG->addChild(E6);
 
-    cout<<"Test show Children:"<<endl;
-    cout<<E1->showChildren()[0]->name<<endl;
-    cout<<MG->showChildren()[0]->name<<endl;
-    cout<<MG->showChildren()[1]->name<<endl;
+   EG->addChild(E7);
+   EG->addChild(FG);
+   EG->addChild(E8);
+   EG->addChild(E9);
 
-    cout<<"Test descendants:"<<endl;
-    vector<Node*> desc_test;
-    desc_test=LG->showDescendants();
-    cout<<desc_test.size()<<endl;
+   FG->addChild(E10);
+   FG->addChild(GG);
 
-    cout<<"LG my desc are:"<<endl;
+   GG->addChild(E13);
 
-    for(int i=0;i<desc_test.size();i++) {
-        cout << desc_test[i]->name << endl;
-    }
+   CG->addChild(E11);
+   CG->addChild(E12);
 
-    return 0;
+
+   vector <int> test;
+   test=G->describeTree();
+
+   for(int i=0;i<test.size();i++)
+       cout<<test[i]<<endl;
+
+   Node* test_translate;
+   int gcount=0;
+   int ecount=0;
+   int location=0;
+
+   test_translate=translate_tree(test,location,&gcount,&ecount);
+
+   return 0;
 }
 
-int main(){
-    int gcount=0;
-    int ecount=0;
-    Gate* root = dynamic_cast<Gate *>(create_tree(3, 2, &gcount, &ecount));
+int main2(){
 
-    cout<<"Number of descendants:"<<endl;
-    cout<<root->countDescendants()<<endl;
+    Gate* G= new Gate("G", generalGateParams);
+    Gate* AG= new Gate("AG", generalGateParams);
+    Gate* BG= new Gate("BG", generalGateParams);
+    Gate* DG= new Gate("DG", generalGateParams);
 
+    NormalExpert* E1= new NormalExpert("E1", generalNormalParams);
+    NormalExpert* E2= new NormalExpert("E2", generalNormalParams);
+    NormalExpert* E3= new NormalExpert("E3", generalNormalParams);
+    NormalExpert* E4= new NormalExpert("E4", generalNormalParams);
+    NormalExpert* E5= new NormalExpert("E5", generalNormalParams);
+    NormalExpert* E6= new NormalExpert("E6", generalNormalParams);
 
-    vector <Node*> desc_test;
-    desc_test=root->showDescendants();
+    G->addChild(E1);
+    G->addChild(AG);
+    G->addChild(E5);
+    AG->addChild(E2);
+    AG->addChild(E3);
+    AG->addChild(BG);
+    BG->addChild(E4);
+    BG->addChild(DG);
+    DG->addChild(E6);
 
-    cout<<"Show descendants:"<<endl;
-    for(int i=0;i<desc_test.size();i++){
-        cout<<desc_test[i]->name<<endl;
-    }
+    vector<int> test;
+    test=G->describeTree2();
 
-    vector <Node*> desc_test2;
-    desc_test2=root->showDescendants2();
+    cout<<"Test 2:"<<endl;
 
-    cout<<"Show descendants 2:"<<endl;
-    for(int i=0;i<desc_test2.size();i++){
-        cout<<desc_test2[i]->name<<endl;
-    }
+    for(int i=0; i<test.size(); i++)
+        cout<<test[i]<<endl;
 
-    delete root;
     return 0;
 }

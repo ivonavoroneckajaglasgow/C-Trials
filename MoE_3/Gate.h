@@ -20,8 +20,7 @@ public:
     ~Gate();
     void addChild(Node* aChild);
     void printChildren();
-    void printDescendants();
-    void printTerminalNodes();
+    int countChildren();
 };
 
 

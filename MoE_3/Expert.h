@@ -14,6 +14,8 @@ using namespace std;
 class Expert: public Node{
 public:
     Expert(string aName);
+    int countChildren();
+    void printChildren();
 };
 
 

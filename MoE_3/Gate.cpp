@@ -53,31 +53,8 @@ void Gate::printChildren(){
     }
 };
 
-void Gate::printDescendants(){
-    if(Children.size()==0){
-        cout<<"I have no descendants."<<endl;
-    }else{
-        for(int i=0;i<Children.size();i++){
-            cout<<Children[i]->name<<endl;
-            if(Children[i]->type=="G"){
-                Children[i]->printDescendants();
-            }
-        }
-    }
-
+int Gate::countChildren(){
+    int n;
+    n=Children.size();
+    return n;
 };
-
-void Gate::printTerminalNodes() {
-    if (Children.size() == 0) {
-        cout << "I have no descendants." << endl;
-    } else {
-        for (int i = 0; i < Children.size(); i++) {
-            if (Children[i]->type == "E") {
-                cout << Children[i]->name << endl;
-            } else {
-                Children[i]->printTerminalNodes();
-            }
-        }
-    }
-};
-
