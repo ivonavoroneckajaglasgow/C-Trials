@@ -1,3 +1,4 @@
+
 //
 // Created by 2022175V on 14/08/2019.
 //
@@ -16,6 +17,9 @@ public:
     Expert(string aName);
     int countChildren();
     void printChildren();
+    vector<Node*> showDescendantsInternal(vector<Node*>* desc);
+    vector<Node*> showTerminalNodesInternal(vector<Node*>* terminal);
+    vector<int> describeTreeInternal(vector<int>* description);
 };
 
 

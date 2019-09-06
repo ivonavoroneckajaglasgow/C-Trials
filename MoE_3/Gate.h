@@ -14,14 +14,21 @@ using namespace std;
 
 class Gate: public Node {
 public:
-    //string name;
+    vector<Node*>  Children;
     GateParameters parameters;
     Gate(string aName, GateParameters aParameters);
     ~Gate();
     void addChild(Node* aChild);
     void printChildren();
+    void printDescendants();
+    void printTerminalNodes();
+    vector<Node*> showChildren();
+    vector<Node*> showDescendantsInternal(vector<Node*>* desc);
+    vector<Node*> showTerminalNodesInternal(vector<Node*>* terminal);
+    vector<int> describeTreeInternal(vector<int>* description);
     int countChildren();
-};
+    int countDescendants();
+ };
 
 
 #endif //MOE_3_GATE_H
