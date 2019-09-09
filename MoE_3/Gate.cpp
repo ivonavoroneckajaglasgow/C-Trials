@@ -57,7 +57,7 @@ void Gate::printDescendants(){
 
     for(int i=0;i<Children.size();i++){
         cout<<Children[i]->name<<endl;
-        if(Children[i]->type=="G"){
+        if(Children[i]->countChildren()!=0){
             Children[i]->printDescendants();
         }
     }
@@ -66,7 +66,7 @@ void Gate::printDescendants(){
 void Gate::printTerminalNodes(){
 
     for (int i = 0; i < Children.size(); i++) {
-        if (Children[i]->type == "E") {
+        if (Children[i]->countChildren() == 0) {
             cout << Children[i]->name << endl;
         } else {
             Children[i]->printTerminalNodes();
@@ -82,7 +82,7 @@ vector<Node*> Gate::showDescendantsInternal(vector<Node*>* desc) {
 
     for(int i=0; i<this->Children.size();i++){
         desc->push_back(this->Children[i]);
-         if(this->Children[i]->type=="G"){
+         if(this->Children[i]->countChildren()!=0){
             this->Children[i]->showDescendantsInternal(desc);
         }
     }
@@ -91,7 +91,7 @@ vector<Node*> Gate::showDescendantsInternal(vector<Node*>* desc) {
 
 vector<Node*> Gate::showTerminalNodesInternal(vector<Node*>* terminal){
     for(int i=0; i<this->Children.size();i++){
-        if(this->Children[i]->type=="E"){
+        if(this->Children[i]->countChildren()==0){
             cout<<"I can see you are an expert "<<Children[i]->name<<endl;
             terminal->push_back(this->Children[i]);
         }else{
@@ -124,4 +124,50 @@ int Gate::countDescendants(){
     desc=this->showDescendants();
     return desc.size();
 };
+
+void Gate::issueID(){
+
+    int gateid=2;
+    int expertid=1;
+
+    this->issueID_helper2(&gateid,&expertid);
+}
+
+void Gate::issueID_helper1(int* gate_id, int* expert_id){
+
+    for(int i=0;i<this->Children.size();i++){
+        if(this->Children[i]->countChildren()==0){
+            cout<<"I know "<< this->Children[i]->name <<" is an expert so I assign the ID "<<*expert_id<<endl;
+            this->Children[i]->id=*expert_id;
+            (*expert_id)++;
+        }else{
+            cout<<"I know "<< this->Children[i]->name <<" is a gate so I assign ID "<<*gate_id<<endl;
+            this->Children[i]->id=*gate_id;
+            (*gate_id)++;
+        }
+    }
+}
+
+
+void Gate::issueID_helper2(int* gate_id, int* expert_id){
+
+    if(this->Parent==NULL){
+        this->id=1;
+        cout<<"I know "<<this->name<<" is a root gate, so I assign ID "<<this->id<<endl;
+    }
+
+    if(this->id==1) {
+       this->issueID_helper1(gate_id, expert_id);
+    }
+
+     for(int i=0;i<this->Children.size();i++){
+        this->Children[i]->issueID_helper1(gate_id,expert_id);
+     }
+
+    for(int i=0;i<this->Children.size();i++) {
+        if (this->Children[i]->countChildren()!=0)
+            this->Children[i]->issueID_helper2(gate_id,expert_id);
+    }
+}
+
 

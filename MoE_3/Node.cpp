@@ -9,11 +9,12 @@ using namespace std;
 
 Node::Node(){
     this->Parent=NULL;
+    this->id=NULL;
 }
 
 void Node::printParent() {
     if (Parent == NULL) {
-        if(type=="G") {
+        if(countChildren()!=0) {
             cout << name << " is a root Gate." << endl;
         }
     } else {
@@ -101,3 +102,8 @@ vector<int> Node::describeTreeInternal(vector<int>* description){
 
 }
 
+void Node::issueID() {}
+
+void Node::issueID_helper1(int* gate_id, int* expert_id){}
+
+void Node::issueID_helper2(int* gate_id, int* expert_id) {}

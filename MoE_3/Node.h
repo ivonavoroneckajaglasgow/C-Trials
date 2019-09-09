@@ -15,6 +15,7 @@ class Expert;
 
 class Node {
 public:
+    int  id;
     Gate* Parent;
     string name;
     string type;
@@ -37,6 +38,9 @@ public:
     virtual int countChildren();
     vector<int> describeTree();
     virtual vector<int> describeTreeInternal(vector<int>* description);
+    virtual void issueID();
+    virtual void issueID_helper1(int* gate_id, int* expert_id);
+    virtual void issueID_helper2(int* gate_id, int* expert_id);
 };
 
 

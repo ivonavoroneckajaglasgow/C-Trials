@@ -28,6 +28,9 @@ public:
     vector<int> describeTreeInternal(vector<int>* description);
     int countChildren();
     int countDescendants();
+    void issueID();
+    void issueID_helper1(int* gate_id, int* expert_id);
+    void issueID_helper2(int* gate_id, int* expert_id);
  };
 
 
